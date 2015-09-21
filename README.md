@@ -4,5 +4,6 @@
 
 Each window can be re-sized and moved.
 Also, each window can be in the two states:
-1. visible
-2. minimized
+
+  1. visible
+  2. minimized
