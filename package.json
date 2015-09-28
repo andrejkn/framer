@@ -45,6 +45,7 @@
     "react": "^0.13.3",
     "redux": "^3.0.0",
     "react-redux": "^2.1.2",
+    "react-hot-loader": "^1.2.8",
     "http-server": "^0.8.5"
   }
 }
