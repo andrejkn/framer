@@ -7,7 +7,7 @@ import Movable from '../components/movable'
 import { getNewPosition } from '../utils/move-helpers';
 
 class App extends Component {
-   render() {
+  render() {
 
     const { panes } = this.props;
     const frameElements = panes.map((pane, index) => {
@@ -26,14 +26,14 @@ class App extends Component {
       );
     });
 
-      return (
+    return (
       <div>
         {frameElements}
       </div>
-      );
-   }
+    );
+  }
 
-   _handleMove = (id, pane, event) => {
+  _handleMove = (id, pane, event) => {
     const { dispatch } = this.props;
     const {
       type: eventType,
@@ -57,7 +57,7 @@ class App extends Component {
     } else if((eventType === 'mouseup' || eventType === 'mouseleave') && pane.get('isMoving')) {
       dispatch(changeFramePosition(id, newX, newY, false, pane.get('isFocused'), currentX, currentY));
     }
-   }
+  }
 
   _handleFocus = (id) => {
     const { dispatch } = this.props;
