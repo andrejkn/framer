@@ -33,16 +33,16 @@ let centeredButtonContent = {
 };
 
 export default {
-	frame: {
+   frame: {
     boxShadow: '-1px 1px 5px 0px rgba(0,0,0,0.5)',
-		borderStyle: 'solid',
+      borderStyle: 'solid',
     borderRadius: `${frameBorder}px ${frameBorder}px 0 0`,
-		borderTopWidth: topWidth,
-		borderColor: FRAME_COLOR,
-		cursor: 'move',
-		minWidth: 150,
-		minHeight: 200
-	},
+      borderTopWidth: topWidth,
+      borderColor: FRAME_COLOR,
+      cursor: 'move',
+      minWidth: 150,
+      minHeight: 200
+   },
 
   buttonOrange: assign({}, roundButton, {
     backgroundColor: ORANGE
