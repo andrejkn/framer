@@ -3,17 +3,17 @@ import assign from 'object-assign';
 const RED = '#F54731';
 const ORANGE = '#F5B031';
 const GREEN = '#31F556';
-const FRAME_COLOR = '#E5F1F6';
+const FRAME_COLOR = '#DDDDDD'; //'#E5F1F6';
 
 
-let topWidth = 50;
-let marginSpace = 10;
-let buttonSize = topWidth - 2 * marginSpace;
-let buttonContentSize = buttonSize - marginSpace;
-let aboveContentSpace = marginSpace / 2;
-let frameBorder = buttonSize / 2;
+const topWidth = 40;
+const marginSpace = 10;
+const buttonSize = topWidth - 2 * marginSpace;
+const buttonContentSize = buttonSize - marginSpace;
+const aboveContentSpace = marginSpace / 2;
+const frameBorder = buttonSize / 2;
 
-let roundButton = {
+const roundButton = {
   cursor: 'pointer',
   fontSize: buttonContentSize,
   borderRadius: '50%',
@@ -25,7 +25,7 @@ let roundButton = {
   verticalAlign: 'middle'
 };
 
-let centeredButtonContent = {
+const centeredButtonContent = {
   lineHeight: buttonSize + 'px',
   verticalAlign: 'middle',
   textAlign: 'center',
@@ -33,16 +33,16 @@ let centeredButtonContent = {
 };
 
 export default {
-   frame: {
+  frame: {
     boxShadow: '-1px 1px 5px 0px rgba(0,0,0,0.5)',
-      borderStyle: 'solid',
+    borderStyle: 'solid',
     borderRadius: `${frameBorder}px ${frameBorder}px 0 0`,
-      borderTopWidth: topWidth,
-      borderColor: FRAME_COLOR,
-      cursor: 'move',
-      minWidth: 150,
-      minHeight: 200
-   },
+    borderTopWidth: topWidth,
+    borderColor: FRAME_COLOR,
+    cursor: 'move',
+    minWidth: 150,
+    minHeight: 200
+  },
 
   buttonOrange: assign({}, roundButton, {
     backgroundColor: ORANGE

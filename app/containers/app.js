@@ -67,10 +67,8 @@ class App extends Component {
 
 function select(state) {
   const { frames } = state;
-  const { data: immutableState } = frames;
-
   return {
-    panes: immutableState.get('panes')
+    panes: frames.get('panes')
   }
 }
 

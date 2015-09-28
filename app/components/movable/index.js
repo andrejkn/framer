@@ -11,7 +11,7 @@ export default class Movable extends Component {
       y = 10
     } = this.props;
 
-    let positionedStyle = assign({}, movableStyle, {
+    const positionedStyle = assign({}, movableStyle, {
       top: y,
       left: x,
       zIndex: isFocused ? 999 : 1
