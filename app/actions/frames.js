@@ -1,4 +1,5 @@
 export const MOVE_FRAME = 'MOVE_FRAME';
+export const MOVE_DOCK = 'MOVE_DOCK';
 export const FOCUS_FRAME = 'FOCUS_FRAME';
 
 function makeActionCreator(type, ...argNames) {

@@ -3,32 +3,41 @@ import { connect } from 'react-redux';
 import { Map, List } from 'immutable';
 import { changeFramePosition, makeFrameFocused } from '../actions/frames'
 import Frame from '../components/frame';
-import Movable from '../components/movable'
+import Movable from '../components/movable';
+import Dock from '../components/dock';
 import { getNewPosition } from '../utils/move-helpers';
 
 class App extends Component {
   render() {
 
-    const { panes } = this.props;
-    const frameElements = panes.map((pane, index) => {
+    const {
+      props,
+      _handleMove,
+      _handleFocus
+    } = this;
+
+    const frameElements = props.panes.map((pane, index) => {
+      const movableContent = pane.get('isFramed') ?
+        ( <Frame children={pane.get('content')} /> ) :
+        ( <Dock panes={ props.pane } /> );
+
       return (
         <Movable
-          handleMove={ this._handleMove.bind(this, index, pane)}
-          isFocused={pane.get('isFocused')}
-          isMoving={pane.get('isMoving')}
-          x={pane.get('x')}
-          y={pane.get('y')}
-          makeFocused={this._handleFocus.bind(this, index)}>
-
-          <Frame children={pane.get('content')} />
-
+          handleMove={ _handleMove.bind(this, index, pane) }
+          isFocused={ pane.get('isFocused') }
+          isMoving={ pane.get('isMoving') }
+          x={ pane.get('x') }
+          y={ pane.get('y') }
+          makeFocused={ _handleFocus.bind(this, index) }
+        >
+          { movableContent }
         </Movable>
       );
     });
 
     return (
       <div>
-        {frameElements}
+        { frameElements }
       </div>
     );
   }

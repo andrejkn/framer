@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Movable from '../movable';
 import styles from './frame.style';
 
 export default class Frame extends Component {

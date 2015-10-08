@@ -1,5 +1,6 @@
 export default {
   movableStyle: {
-    position: 'absolute'
+    position: 'absolute',
+    lineHeight: 22
   }
 };
