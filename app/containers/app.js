@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Map, List } from 'immutable';
-import { changeFramePosition, makeFrameFocused } from '../actions/frames'
+import {
+  changeFramePosition,
+  makeFrameFocused,
+  toggleFrameStatus
+} from '../actions/frames'
 import Frame from '../components/frame';
 import Movable from '../components/movable';
 import Dock from '../components/dock';
+import widgets from '../components/widgets';
 import { getNewPosition } from '../utils/move-helpers';
 
 class App extends Component {
@@ -13,22 +18,32 @@ class App extends Component {
     const {
       props,
       _handleMove,
-      _handleFocus
+      _handleFocus,
+      _handleToggleFrameStatus
     } = this;
 
-    const frameElements = props.panes.map((pane, index) => {
-      const movableContent = pane.get('isFramed') ?
-        ( <Frame children={pane.get('content')} /> ) :
-        ( <Dock panes={ props.pane } /> );
+    const frameElements = props.panes.map((pane, id) => {
+      const movableContent = pane.get('isFramed') ? (
+        <Frame
+          key={ id }
+          children={ widgets[id] }
+          status={ pane.get('status') }
+          toggleFrameStatus={ _handleToggleFrameStatus.bind(this, id) }
+          pane={ pane } />
+      ) : (
+        <Dock
+          toggleFrameStatus={ _handleToggleFrameStatus }
+          panes={ props.panes } />
+      );
 
       return (
         <Movable
-          handleMove={ _handleMove.bind(this, index, pane) }
+          handleMove={ _handleMove.bind(this, id, pane) }
           isFocused={ pane.get('isFocused') }
           isMoving={ pane.get('isMoving') }
           x={ pane.get('x') }
           y={ pane.get('y') }
-          makeFocused={ _handleFocus.bind(this, index) }
+          makeFocused={ _handleFocus.bind(this, id) }
         >
           { movableContent }
         </Movable>
@@ -71,6 +86,11 @@ class App extends Component {
   _handleFocus = (id) => {
     const { dispatch } = this.props;
     dispatch(makeFrameFocused(id));
+  }
+
+  _handleToggleFrameStatus = (id) => {
+    const { dispatch } = this.props;
+    dispatch(toggleFrameStatus(id));
   }
 }
 

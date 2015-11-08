@@ -1,10 +1,13 @@
-import assign from 'object-assign';
-
 const RED = '#F54731';
 const ORANGE = '#F5B031';
 const GREEN = '#31F556';
-const FRAME_COLOR = '#DDDDDD'; //'#E5F1F6';
-
+const FRAME_COLOR = {
+  focused: 'rgba(138, 178, 179, 1)',
+  unfocused: 'rgba(138, 178, 179, 0.8)'
+};
+const TITLE_COLOR = '#FFFFFF';
+const TITLE_SIZE = 20;
+const TITLE_SHADOW_COLOR = '#333333';
 
 const topWidth = 40;
 const marginSpace = 10;
@@ -38,21 +41,25 @@ export default {
     borderStyle: 'solid',
     borderRadius: `${frameBorder}px ${frameBorder}px 0 0`,
     borderTopWidth: topWidth,
-    borderColor: FRAME_COLOR,
+    borderColor: FRAME_COLOR.unfocused,
     cursor: 'move',
     minWidth: 150,
     minHeight: 200
   },
 
-  buttonOrange: assign({}, roundButton, {
+  focused: {
+    borderColor: FRAME_COLOR.focused,
+  },
+
+  buttonOrange: Object.assign({}, roundButton, {
     backgroundColor: ORANGE
   }),
 
-  buttonRed: assign({}, roundButton, {
+  buttonRed: Object.assign({}, roundButton, {
     backgroundColor: RED
   }),
 
-  buttonGreen: assign({}, roundButton, {
+  buttonGreen: Object.assign({}, roundButton, {
     backgroundColor: GREEN
   }),
 
@@ -64,5 +71,15 @@ export default {
 
   frameContent: {
     cursor: 'default'
+  },
+
+  title: {
+    color: TITLE_COLOR,
+    fontSize: TITLE_SIZE,
+    display: 'inline-block',
+    lineHeight: 0,
+    verticalAlign: 'middle',
+    fontFamily: 'Arial',
+    textShadow: `1px 1px ${TITLE_SHADOW_COLOR}`
   }
 }

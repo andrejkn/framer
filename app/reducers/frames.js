@@ -3,54 +3,51 @@ import { fromJS, List, Map } from 'immutable';
 import {
   MOVE_FRAME,
   MOVE_DOCK,
-  FOCUS_FRAME
+  FOCUS_FRAME,
+  TOGGLE_FRAME_STATUS,
 } from '../actions/frames';
 
+const UNDOCKED = 'UNDOCKED';
+const DOCKED = 'DOCKED';
+
 const initialState = Map({
-  panes: List.of(
-    Map({
+  panes: fromJS({
+    '001': {
       isFramed: false,
       x: 200,
       y: 500,
       isMoving: false,
       isFocused: false
-    }),
-    Map({
+    },
+    '002': {
+      isFramed: false,
       isFramed: true,
+      name: 'Wikipedia',
       x: 10,
       y: 20,
       isMoving: false,
       isFocused: false,
-      content: (
-        <iframe width="550"
-          height="350"
-          src="http://www.wikipedia.org">
-        </iframe>
-      )
-    }),
-    Map({
+      status: UNDOCKED
+    },
+    '003': {
       isFramed: true,
+      name: 'Notes',
       x: 20,
       y: 30,
       isMoving: false,
       isFocused: false,
-      content: <textarea rows='20' cols='30' />
-    }),
-    Map({
+      status: UNDOCKED
+    },
+    '004': {
       isFramed: true,
+      name: 'YouTube',
       x: 30,
       y: 40,
       isMoving: false,
       isFocused: false,
-      content: (
-        <iframe width="560"
-          height="315"
-          src="https://www.youtube.com/embed/5BCZSpyO6q0"
-          frameborder="0">
-        </iframe>
-      )
-    })
-  )
+      status: UNDOCKED
+    }
+  })
 });
 
 export default function frames(state = initialState, action) {
@@ -59,9 +56,11 @@ export default function frames(state = initialState, action) {
     case FOCUS_FRAME:
       return (
         state.update('panes', (panes) =>
-          panes.map((pane, index) =>
-            (action.id === index) ? pane.set('isFocused', true) :
-              pane.set('isFocused', false)))
+          panes.map((pane) =>
+            (action.id === pane.get('id')) ? pane.set('isFocused', true) :
+              pane.set('isFocused', false)
+          )
+        )
       );
 
     case MOVE_FRAME:
@@ -73,7 +72,16 @@ export default function frames(state = initialState, action) {
             .set('isMoving', action.isMoving)
             .set('isFocused', action.isFocused)
             .set('prevX', action.prevX)
-            .set('prevY', action.prevY))
+            .set('prevY', action.prevY)
+        )
+      );
+
+    case TOGGLE_FRAME_STATUS:
+      return state.update('panes', (panes) =>
+        panes.update(action.id, (pane) =>
+          pane
+            .set('status', (pane.get('status') === DOCKED) ? UNDOCKED : DOCKED)
+        )
       );
 
     default:

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {  Component  } from 'react';
 import styles from './frame.style';
 
 export default class Frame extends Component {
@@ -9,37 +9,55 @@ export default class Frame extends Component {
 
     const {
       frame,
+      focused,
       frameContent,
       buttonsPanel,
       buttonRed,
       buttonGreen,
       buttonOrange,
-      centeredButtonContent
-    } = styles;
+      centeredButtonContent,
+      title
+     } = styles;
+
+    const { props } = this;
+    const focStyle = (props.pane.get('isFocused')) ? focused : {};
+    const visibilityStyle = (props.pane.get('status') === 'DOCKED') ? {
+      display: 'none'
+    } : {};
+    const focFrame = Object.assign({}, frame, focStyle, visibilityStyle);
 
     return (
-      <div style={frame}>
-        <div style={buttonsPanel}>
-          <div style={buttonRed}>
-            <span style={centeredButtonContent}>
-              {CLOSE_CHAR}
+      <div style={ focFrame }>
+        <div style={ buttonsPanel }>
+        { /**
+          <div style={ buttonRed }>
+            <span style={ centeredButtonContent }>
+              { CLOSE_CHAR }
             </span>
           </div>
-          <div style={buttonOrange}>
-            <span style={centeredButtonContent}>
-              {MINIMIZE_CHAR}
+        */ }
+          <div
+            style={ buttonOrange }
+            onClick={ props.toggleFrameStatus }>
+            <span style={ centeredButtonContent }>
+              { MINIMIZE_CHAR }
             </span>
           </div>
-          <div style={buttonGreen}>
-            <span style={centeredButtonContent}>
-              {EXPAND_CHAR}
+        { /**
+          <div style={ buttonGreen }>
+            <span style={ centeredButtonContent }>
+              { EXPAND_CHAR }
             </span>
+          </div>
+        */ }
+          <div style={ title }>
+            { props.pane.get('name') }
           </div>
         </div>
-        <div style={frameContent}>
-          {this.props.children}
+        <div style={ frameContent }>
+          { props.children }
         </div>
       </div>
     );
-  }
-}
+   }
+ }
