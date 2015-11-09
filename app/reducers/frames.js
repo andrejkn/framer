@@ -14,10 +14,10 @@ const initialState = Map({
   panes: fromJS({
     '001': {
       isFramed: false,
-      x: 200,
-      y: 500,
+      x: 28,
+      y: 624,
       isMoving: false,
-      isFocused: false
+      focusLevel: 1
     },
     '002': {
       isFramed: false,
@@ -26,16 +26,16 @@ const initialState = Map({
       x: 10,
       y: 20,
       isMoving: false,
-      isFocused: false,
-      status: UNDOCKED
+      focusLevel: 2,
+      status: DOCKED
     },
     '003': {
       isFramed: true,
       name: 'Notes',
-      x: 20,
-      y: 30,
+      x: 668,
+      y: 4,
       isMoving: false,
-      isFocused: false,
+      focusLevel: 3,
       status: UNDOCKED
     },
     '004': {
@@ -44,9 +44,28 @@ const initialState = Map({
       x: 30,
       y: 40,
       isMoving: false,
-      isFocused: false,
+      focusLevel: 4,
+      status: DOCKED
+    },
+    '005': {
+      isFramed: true,
+      name: 'GitHub - the repo of this project!',
+      x: 668,
+      y: 514,
+      isMoving: false,
+      focusLevel: 5,
+      status: UNDOCKED
+    },
+    '006': {
+      isFramed: true,
+      name: 'Blog',
+      x: 3,
+      y: 4,
+      isMoving: false,
+      focusLevel: 6,
       status: UNDOCKED
     }
+
   })
 });
 
@@ -54,14 +73,17 @@ export default function frames(state = initialState, action) {
 
   switch (action.type) {
     case FOCUS_FRAME:
-      return (
-        state.update('panes', (panes) =>
-          panes.map((pane) =>
-            (action.id === pane.get('id')) ? pane.set('isFocused', true) :
-              pane.set('isFocused', false)
-          )
-        )
-      );
+      return state.update('panes', (panes) => {
+        const selectedFocusLevel = panes.get(action.id).get('focusLevel');
+
+        return panes.map((pane, key) => {
+          const currentFocusLevel = pane.get('focusLevel');
+          const newFocusLevel = (currentFocusLevel < selectedFocusLevel) ?
+            currentFocusLevel : currentFocusLevel - 1;
+          return (action.id === key) ? pane.set('focusLevel', panes.size) :
+            pane.set('focusLevel', newFocusLevel);
+        })
+      });
 
     case MOVE_FRAME:
       return state.update('panes', (panes) =>
@@ -70,7 +92,6 @@ export default function frames(state = initialState, action) {
             .set('x', action.x)
             .set('y', action.y)
             .set('isMoving', action.isMoving)
-            .set('isFocused', action.isFocused)
             .set('prevX', action.prevX)
             .set('prevY', action.prevY)
         )

@@ -5,7 +5,7 @@ export default class Movable extends Component {
 
   render() {
     const {
-      isFocused,
+      focusLevel,
       x = 10,
       y = 10
     } = this.props;
@@ -13,7 +13,7 @@ export default class Movable extends Component {
     const positionedStyle = Object.assign({}, movableStyle, {
       top: y,
       left: x,
-      zIndex: isFocused ? 999 : 1
+      zIndex: focusLevel
     });
 
     return (

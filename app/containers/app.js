@@ -23,29 +23,34 @@ class App extends Component {
     } = this;
 
     const frameElements = props.panes.map((pane, id) => {
+      const isFocused = (props.panes.size === pane.get('focusLevel'));
+
       const movableContent = pane.get('isFramed') ? (
         <Frame
           key={ id }
           children={ widgets[id] }
           status={ pane.get('status') }
           toggleFrameStatus={ _handleToggleFrameStatus.bind(this, id) }
-          pane={ pane } />
+          pane={ pane.merge({isFocused: isFocused}) } />
       ) : (
         <Dock
           toggleFrameStatus={ _handleToggleFrameStatus }
+          makeFocused={ _handleFocus }
           panes={ props.panes } />
       );
 
       return (
         <Movable
           handleMove={ _handleMove.bind(this, id, pane) }
-          isFocused={ pane.get('isFocused') }
+          focusLevel={ pane.get('focusLevel') }
+          isFocused={ isFocused }
           isMoving={ pane.get('isMoving') }
           x={ pane.get('x') }
           y={ pane.get('y') }
-          makeFocused={ _handleFocus.bind(this, id) }
-        >
+          makeFocused={ _handleFocus.bind(this, id) }>
+
           { movableContent }
+
         </Movable>
       );
     });
@@ -65,6 +70,7 @@ class App extends Component {
       clientY: currentY
     } = event;
 
+    const focusLevel = pane.get('focusLevel');
     const frameX = pane.get('x');
     const frameY = pane.get('y');
 
@@ -75,11 +81,11 @@ class App extends Component {
     const newY = frameY + dY;
 
     if(eventType === 'mousedown') {
-      dispatch(changeFramePosition(id, frameX, frameY, true, true, currentX, currentY));
+      dispatch(changeFramePosition(id, frameX, frameY, true, focusLevel, currentX, currentY));
     } else if(eventType === 'mousemove' && pane.get('isMoving')) {
-      dispatch(changeFramePosition(id, newX, newY, true, true, currentX, currentY));
+      dispatch(changeFramePosition(id, newX, newY, true, focusLevel, currentX, currentY));
     } else if((eventType === 'mouseup' || eventType === 'mouseleave') && pane.get('isMoving')) {
-      dispatch(changeFramePosition(id, newX, newY, false, pane.get('isFocused'), currentX, currentY));
+      dispatch(changeFramePosition(id, newX, newY, false, pane.get('focusLevel'), currentX, currentY));
     }
   }
 

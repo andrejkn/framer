@@ -14,7 +14,7 @@ function makeActionCreator(type, ...argNames) {
 }
 
 export const changeFramePosition = makeActionCreator(MOVE_FRAME,
-  'id', 'x', 'y', 'isMoving', 'isFocused', 'prevX', 'prevY');
+  'id', 'x', 'y', 'isMoving', 'focusLevel', 'prevX', 'prevY');
 
 export const makeFrameFocused = makeActionCreator(FOCUS_FRAME, 'id');
 

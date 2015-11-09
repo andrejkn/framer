@@ -4,29 +4,41 @@ import styles from './dock.style';
 export default class Dock extends Component {
   render() {
 
-    const { props } = this;
+    const {
+      props,
+      handleClick
+    } = this;
 
     const {
       dock,
       dockContent,
-      dockItem,
-      dockItems
+      dockItem
     } = styles;
 
-    const items = props.panes.map((pane, id) => (pane.get('status') === 'DOCKED') ?
-      (
+    const items = props.panes.map((pane, id) => {
+      const dockItem = (pane.get('status') === 'DOCKED') ?
+        styles.dockedItem : styles.undockedItem;
+
+      return (
         <div
-          onClick={ props.toggleFrameStatus.bind(null, id) }
-          style={ styles.dockItem }>
+          onClick={ handleClick.bind(this, id) }
+          style={ dockItem }>
           { pane.get('name') }
         </div>
-      ) : null
-    );
+      )
+    });
 
     return (
       <div style={ styles.dock }>
         { items }
       </div>
     );
+  }
+
+  handleClick = (id) => {
+    const { props } = this;
+
+    props.toggleFrameStatus(id);
+    props.makeFocused(id);
   }
 }
