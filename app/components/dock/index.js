@@ -24,13 +24,13 @@ export default class Dock extends Component {
       const focusedItem = (isFocused && !isDocked) ? styles.focusedItem : {};
       const itemStyle = Object.assign({}, dockItem, focusedItem);
 
-      return (
+      return pane.get('status') ? (
         <div
           onClick={ handleClick.bind(this, id) }
           style={ itemStyle }>
           { pane.get('name') }
         </div>
-      )
+      ) : null
     });
 
     return (
