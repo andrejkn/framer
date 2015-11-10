@@ -16,13 +16,18 @@ export default class Dock extends Component {
     } = styles;
 
     const items = props.panes.map((pane, id) => {
-      const dockItem = (pane.get('status') === 'DOCKED') ?
+      const isDocked = (pane.get('status') === 'DOCKED');
+      const isFocused = (props.panes.size === pane.get('focusLevel'));
+
+      const dockItem = isDocked ?
         styles.dockedItem : styles.undockedItem;
+      const focusedItem = (isFocused && !isDocked) ? styles.focusedItem : {};
+      const itemStyle = Object.assign({}, dockItem, focusedItem);
 
       return (
         <div
           onClick={ handleClick.bind(this, id) }
-          style={ dockItem }>
+          style={ itemStyle }>
           { pane.get('name') }
         </div>
       )

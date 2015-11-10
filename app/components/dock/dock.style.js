@@ -1,9 +1,9 @@
 export default {
   dock: {
-    height: 100,
     minWidth: 400,
     padding: 5,
     borderRadius: 5,
+    borderTop: 'solid rgba(138, 178, 179, 0.69) 10px',
     backgroundColor: 'rgba(116, 100, 100, 0.69)',
     cursor: 'move'
   },
@@ -20,7 +20,7 @@ export default {
     backgroundColor: '#F3F0F0',
     fontFamily: 'Arial',
     borderRadius: 2,
-    color: '#270D0C',
+    color: 'rgb(187, 174, 174)',
     minHeight: 20,
     lineHeight: 2,
     display: 'inline-block',
@@ -32,8 +32,14 @@ export default {
     }
   },
 
+  focusedItem: {
+    backgroundColor: 'rgb(219, 242, 243)',
+    color: 'rgb(83, 83, 83)'
+  },
+
   dockedItem: {
     backgroundColor: '#270D0C',
+    boxShadow: 'rgba(246, 246, 246, 0.27) -2px 2px',
     fontFamily: 'Arial',
     borderRadius: 2,
     color: '#F3F0F0',
