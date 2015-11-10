@@ -5,5 +5,6 @@ You can find a live demo here 👉 [app.andrej.xyz](http://app.andrej.xyz)
 
 **Framer** is consisted of movable frames which can be docked (minimized). Inside each movable frame there is a widget.
 Widgets emulate desktop applications, but really they are just DOM nodes, such as a `textarea`, `iframe`, `ReactElement` etc.
-Also, framer has a **DOCK** which is a plane that contains buttons of the active widgets. The dock is similar to the
+Also, framer has a **DOCK** which is a pane, which is also movable,
+that contains buttons of the active widgets. The dock is similar to the
 *Start* menu from Windows or the *Dock* from MacOS.
