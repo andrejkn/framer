@@ -44,7 +44,11 @@ export default {
     borderColor: FRAME_COLOR.unfocused,
     cursor: 'move',
     minWidth: 150,
-    minHeight: 200
+    minHeight: 200,
+    msUserSelect: 'none',
+    MozUserSelect: 'none',
+    WebkitUserSelect: 'none',
+    userSelect: 'none'
   },
 
   focused: {
